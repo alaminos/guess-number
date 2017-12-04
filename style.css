@@ -1,0 +1,107 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    max-width: 100vw;
+    min-height: 100vh;
+    
+    margin: 0 auto;
+    padding: 20px;
+    
+    display: flex;
+    flex-flow: column;
+
+    background-image: url(background.jpg);
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#infoPanel {
+    height: 50vh;
+
+    color: greenyellow;
+    background-color: rgba(8, 37, 4, 0.9);
+    font-size: 20px;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+form {
+    display: none;
+    flex-flow: column;
+}
+
+.onlyForBigScreens {
+    display: none;
+}
+
+@media (min-width: 680px) {
+    body {
+        background-image: url(background.jpg);
+        background-repeat: repeat;
+        display: grid;
+        grid-template-columns: 30% auto 30%;
+        grid-template-rows: 10vh auto auto;
+
+        font-size: 1.8vw;
+    }
+
+    .onlyForBigScreens {
+        display: block;
+    }
+
+    main {
+        margin: 0;
+
+        grid-column: 2 / auto;
+        grid-row: 2 / auto;
+
+        background-image: none;
+        background-color: rgba(128, 128, 128, 0.9);
+        max-width: 1000px; /* max and min dimensions just to overwrite those stated before the media query*/
+        min-height: 200px;
+    }
+
+    #infoPanel {
+        height: 150px;
+        font-size: 1.2em;
+    }
+
+    #triesPanel {
+        display: block;
+        font-size: 1.1em;
+       
+        flex-basis: 150%
+    }
+
+    #triesLeftTitle {
+        font-size: 0.8em;
+    }
+
+    #triesLeftPanel {
+        font-size: 3vw;
+        text-align: center;
+    }
+
+    .onlyForBigScreens {
+        display: flex;
+        
+    }
+
+
+}
