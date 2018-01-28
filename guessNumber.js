@@ -35,39 +35,37 @@ var guessTheNumber = {
 
     //is it right?
     isRight: function(userInput) {
-        this.triesLeft -= 1;
         view.clearInputField();
-        if (userInput === this.secretNumber) {
+        if (isNaN(userInput)) { 
+            view.numbersOnly();
+        } else {
+            this.triesLeft --;
+            view.guessesLog(userInput);
+            view.triesLeftUpdate();
+            if (userInput === this.secretNumber) {
             view.youWin();
             view.isVisible("userInputForm", "none");
             view.isVisible("startGameBtn", "block");
-        } else {
-            if (this.triesLeft > 0) { //if guess is wrong, first we check if the user ran out of tries
-                this.someFeedback(userInput); //if user is still alive, we offer her some feedback
             } else {
-                view.gameOver(); //otherwise: gameOver
-                view.isVisible("userInputForm", "none");
-                view.isVisible("startGameBtn", "block");
-            };
-        }
-    },
-
-    //response to user
-    someFeedback: function(wrongGuess) {
-        if (isNaN(wrongGuess)) { //this evaluation should be removed from here 
-            //and be placed the first one in the isRight method, so that the
-            //call to view.guessesLog is immediately after it, way up in the process
-            // before it branch out in different scenarios
-            view.numbersOnly();
-        } else {
-            if (wrongGuess > this.secretNumber) {
-                view.wrongGuess("smaller than ", wrongGuess);
-            } else { 
-                view.wrongGuess("larger than ", wrongGuess);
+                if (this.triesLeft > 0) { //if guess is wrong, first we check if the user ran out of tries
+                    this.someFeedback(userInput); //if user is still alive, we offer her some feedback
+                } else {
+                    view.gameOver(); //otherwise: gameOver
+                    view.isVisible("userInputForm", "none");
+                    view.isVisible("startGameBtn", "block");
+                };
             }
         }
     },
 
+    //response to user after a wrong guess
+    someFeedback: function(wrongGuess) {
+        if (wrongGuess > this.secretNumber) {
+            view.wrongGuess("smaller than ", wrongGuess);
+        } else { 
+            view.wrongGuess("larger than ", wrongGuess);
+        }
+    }
 
 };
 
@@ -79,11 +77,12 @@ var handlers = {
         view.welcome();
         view.isVisible("userInputForm", "flex");
         view.isVisible("startGameBtn", "none");
+        view.triesLeftUpdate();
     },
 
     newGuess: function() {
         var newGuess = document.getElementById("guessInput").valueAsNumber;
-        view.guessesLog(newGuess); //this call should go AFTER user input has been checked to be a number
+         //this call should go AFTER user input has been checked to be a number
         guessTheNumber.isRight(newGuess);
         return false;
     }
@@ -108,7 +107,7 @@ var view = {
 
     wrongGuess: function(clue, wrongGuess) {
         //var message = document.getElementById("infoPanel");
-        this.infoPanel.textContent = "Sorry, the secret number is " + clue + wrongGuess + "salto de línea" + " Please try again. "; //solucionar saltos de línea
+        this.infoPanel.textContent = "Sorry, the secret number is " + clue + wrongGuess + ". Please try again. "; //solucionar saltos de línea
     },
 
     numbersOnly: function() {
@@ -134,6 +133,11 @@ var view = {
         var triesPanel = document.getElementById("triesPanel");
         triesPanel.textContent += " " + newGuess + " ";
 
+    },
+
+    triesLeftUpdate: function() {
+        var triesLeftPanel = document.getElementById("triesLeftPanel");
+        triesLeftPanel.textContent = guessTheNumber.triesLeft;
     }
 
 };

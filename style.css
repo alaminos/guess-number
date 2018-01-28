@@ -4,6 +4,11 @@ html, body {
     box-sizing: border-box;
 }
 
+body {
+    background-image: url(background.jpg);
+    background-repeat: repeat;
+}
+
 main {
     max-width: 100vw;
     min-height: 100vh;
@@ -13,8 +18,8 @@ main {
     
     display: flex;
     flex-flow: column;
-
-    background-image: url(background.jpg);
+    
+    background-color: rgba(128, 128, 128, 0.9);
 }
 
 button {
@@ -52,8 +57,7 @@ form {
 
 @media (min-width: 680px) {
     body {
-        background-image: url(background.jpg);
-        background-repeat: repeat;
+        
         display: grid;
         grid-template-columns: 30% auto 30%;
         grid-template-rows: 10vh auto auto;
@@ -78,7 +82,8 @@ form {
     }
 
     #infoPanel {
-        height: 150px;
+        height: 30vh;
+        min-height: 180px;
         font-size: 1.2em;
     }
 
